@@ -87,7 +87,7 @@ def classify_images(images_dir, results_dic, model):
 
         # Append all data into result_dic
         # Reference: https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python
-        results_dic[filename].append(' ,'.join(classifier_labels))
+        results_dic[filename].append(', '.join(classifier_labels))
         results_dic[filename].append(is_match)
 
     return None 
