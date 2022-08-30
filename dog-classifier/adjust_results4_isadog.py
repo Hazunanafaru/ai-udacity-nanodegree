@@ -82,18 +82,18 @@ def adjust_results4_isadog(results_dic, dogfile):
         # Check the pet_labels is dog or not
         if result_list[0] in dognames_dict.keys():
             # print("{} is init".format(result_list[0]))
-            results_dic[filename][3] = 1
+            results_dic[filename].append(1)
         else:
             # print("{} is not available".format(result_list[0]))
-            results_dic[filename][3] = 0
+            results_dic[filename].append(0)
         
         # Check the classifier_labels is dog or not
         if result_list[1] in dognames_dict.keys():
             # print("{} is init".format(result_list[1]))
             # print(classifier_label, result_list[0])
-            results_dic[filename][4] = 1
+            results_dic[filename].append(1)
         else:
             # print("{} is not available".format(result_list[1]))
             # print(classifier_label, result_list[0])
-            results_dic[filename][4] = 1
+            results_dic[filename].append(0)
     None
