@@ -29,7 +29,6 @@ from classifier import classifier
 #       results_dic dictionary that is passed into the function is a mutable 
 #       data type so no return is needed.
 # 
-import ast
 def classify_images(images_dir, results_dic, model):
     """
     Creates classifier labels with classifier function, compares pet labels to 
@@ -66,71 +65,29 @@ def classify_images(images_dir, results_dic, model):
      Returns:
            None - results_dic is mutable data type so no return needed.         
     """
-    # Defining lists to populate dictionary 
-    # filenames = ["Beagle_01141.jpg", "Beagle_01125.jpg", "skunk_029.jpg" ]
-    # pet_labels = ["beagle", "beagle", "skunk"]
-    # classifier_labels = ["walker hound, walker foxhound", "beagle",
-    #                     "skunk, polecat, wood pussy"]
-    # pet_label_is_dog = [1, 1, 0]
-    # classifier_label_is_dog = [1, 1, 0]
-    
-    # Defining empty dictionary
-    classifier_results_dic = dict()
 
-    # Open Pet Labels file
-    with open('imagenet1000_clsid_to_human.txt') as imagenet_classes_file:
-        imagenet_classes_dict = ast.literal_eval(imagenet_classes_file.read())
-
-    print(results_dic)
-    # Populates empty dictionary with both labels &indicates if they match (idx 2)
-    for idx, pet_labels in results_dic:
+    # Looping result_dic with filename and pet_labels
+    for filename, pet_labels in results_dic.items():
         # Classify image and get the result
-        image_path = images_dir + '/' + results_dic[idx]
-        classifier_labels = classifier(image_path, model)
+        image_path = images_dir + '/' + filename
+        result, res_idx = classifier(image_path, model)
+
+        # Format the result to suit our pet_labels
+        list_class_labels = result.split(',')
+        classifier_labels = list(map(lambda label: label.lower().strip(), list_class_labels))
+        # Reference: https://www.programiz.com/python-programming/anonymous-function
+
 
         # Get pet image label
-        # Is pet image label matched with classifier image labels?
-        if classifier_labels == pet_labels:
-            imagenet_idx = imagenet_classes_dict.keys()[imagenet_classes_dict.values().index(classifier_labels)]
+        # Is pet image label is a dog and matched with classifier image labels?
+        if (151 <= res_idx <=268) and (pet_labels[0] in classifier_labels):
             is_match = 1
         else:
             is_match = 0
 
-        # If first time key is assigned initialize the list with pet & 
-        # classifier labels
-        if images_dir[idx] not in classifier_results_dic:
-            classifier_results_dic[images_dir[idx]] = [ imagenet_classes_dict[imagenet_idx], classifier_labels[idx], is_match]
+        # Append all data into result_dic
+        # Reference: https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python
+        results_dic[filename].append(' ,'.join(classifier_labels))
+        results_dic[filename].append(is_match)
 
-        # Determine if pet_labels matches classifier_labels using in operator
-        # - so if pet label is 'in' classifier label it's a match
-        # ALSO since Key already exists because labels were added, append 
-        # value to end of list for idx 2 
-        # if pet image label was FOUND then there is a match 
-        # if pet_labels[idx] in classifier_labels[idx]:
-        #     results_dic[images_dir[idx]].append(1)
-
-        # if pet image label was NOT found then there is no match
-        # else:
-        #     results_dic[images_dir[idx]].append(0)
-
-    # Populates dictionary with whether or not labels indicate a dog image (idx 3&4)
-    # for idx in range (0, len(images_dir)):
-        # Key already exists, extend values to end of list for idx 3 & 4
-        # results_dic[images_dir[idx]].extend([pet_label_is_dog[idx], 
-        #                                 classifier_label_is_dog[idx]])
-
-    # Iterates through the list to print the results for each filename
-    # for key in results_dic:
-    #     print("\nFilename=", key, "\npet_image Label=", results_dic[key][0],
-    #         "\nClassifier Label=", results_dic[key][1], "\nmatch=",
-    #         results_dic[key][2], "\nImage is dog=", results_dic[key][3],
-    #         "\nClassifier is dog=", results_dic[key][4])                        
-
-    #     # Provides classifications of the results
-    #     if sum(results_dic[key][2:]) == 3:
-    #         print("*Breed Match*")
-    #     if sum(results_dic[key][3:]) == 2:
-    #         print("*Is-a-Dog Match*")
-    #     if sum(results_dic[key][3:]) == 0 and results_dic[key][2] == 1:
-    #         print("*NOT-a-Dog Match*")
-    return classifier_results_dic 
+    return None 
