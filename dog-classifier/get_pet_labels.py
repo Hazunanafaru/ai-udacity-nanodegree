@@ -44,7 +44,7 @@ def get_pet_labels(image_dir):
     from os import listdir  
 
     # Retrieve the filenames from folder pet_images/
-    filename_list = listdir("pet_images/")
+    filename_list = listdir(image_dir)
     
     # Creates empty dictionary named results_dic
     results_dic = dict()
