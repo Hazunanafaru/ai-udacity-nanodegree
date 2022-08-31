@@ -82,7 +82,7 @@ def print_results(results_dic, results_stats_dic, model,
             ):
             print("====Incorrect Dogs====")
             for result in results_dic.values():
-                if sum(result[3:] == 1):
+                if sum(result[3:]) == 1:
                     print("Dog Pet Label: {}".format(result[0]))
                     print("Dog Classifier Label: {}".format(result[1]))
 
