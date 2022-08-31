@@ -73,7 +73,7 @@ def classify_images(images_dir, results_dic, model):
         result = classifier(image_path, model)
 
         # Format the result to suit our pet_labels
-        list_class_labels = result[0].split(',')
+        list_class_labels = result.split(',')
         classifier_labels = list(map(lambda label: label.lower().strip(), list_class_labels))
         # Reference: https://www.programiz.com/python-programming/anonymous-function
 
