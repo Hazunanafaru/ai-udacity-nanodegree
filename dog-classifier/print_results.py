@@ -68,10 +68,10 @@ def print_results(results_dic, results_stats_dic, model,
     print("Number of Images: {}".format(results_stats_dic['n_images']))
     print("Number of Dog Images: {}".format(results_stats_dic['n_dogs_img']))
     print("Number of \"Not-a\" Dog Images: {}".format(results_stats_dic['n_notdogs_img']))
-    print("% Correct Dogs: {}".format(results_stats_dic['n_correct_dogs']))
-    print("% Correct Breed: {}".format(results_stats_dic['n_correct_breed']))
-    print("% Correct \"Not-a\" Dog: {}".format(results_stats_dic['n_correct_notdogs']))
-    print("% Match (optional - this includes both dogs and not-a dog): {}".format(results_stats_dic['n_match']))
+    print("% Correct Dogs: {}".format(results_stats_dic['pct_correct_dogs']))
+    print("% Correct Breed: {}".format(results_stats_dic['pct_correct_breed']))
+    print("% Correct \"Not-a\" Dog: {}".format(results_stats_dic['pct_correct_notdogs']))
+    print("% Match (optional - this includes both dogs and not-a dog): {}".format(results_stats_dic['pct_match']))
 
     # Logic for incorrect dogs
     if (print_incorrect_dogs == True):
