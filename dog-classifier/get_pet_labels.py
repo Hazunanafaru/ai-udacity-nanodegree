@@ -75,9 +75,10 @@ def get_pet_labels(image_dir):
 
             results_dic[pet_image] = [pet_name]
         else:
-            print("** Warning: Key=", filename_list[idx], 
-                "already exists in results_dic with value =", 
-                results_dic[filename_list[idx]])
+            if filename_list[idx]  in results_dic:
+                print("** Warning: Key=", filename_list[idx], "already exists in results_dic with value =", results_dic[filename_list[idx]])
+            if filename_list[idx][0].isalpha() != True:
+                print("** Warning: Key=", filename_list[idx], "is a hidden object. Please rename or delete this file")
 
     # Replace None with the results_dic dictionary that you created with this
     # function
